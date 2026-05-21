@@ -1,6 +1,77 @@
 #include "test.h"
 #include "../src/str.h"
 
+#define ALL_TESTS \
+    X(create_a_full_slice) \
+    X(slice_single_char) \
+    X(create_empty_slice_if_end_is_too_large) \
+    X(create_empty_slice_when_start_is_same_as_end) \
+    X(not_create_slice_when_start_is_larger_than_end) \
+    X(create_a_slice) \
+    X(not_find_index_of_char) \
+    X(find_index_of_char) \
+    X(not_find_index_of_string) \
+    X(find_index_of_string) \
+    X(not_be_an_allocated_string) \
+    X(be_an_allocated_string) \
+    X(not_contain_chars) \
+    X(contain_chars) \
+    X(contain_another_string) \
+    X(clone_a_null_string) \
+    X(clone_a_heap_allocated_string) \
+    X(clone_a_non_heap_allocated_string) \
+    X(not_append_empty_string) \
+    X(create_zero_capacity_string) \
+    X(not_append_on_non_allocated_string) \
+    X(not_append_char_on_non_allocated_string) \
+    X(not_destroy_destroyed_string) \
+    X(not_destroy_non_heap_allocated_string) \
+    X(append_multiple_strings) \
+    X(be_equal_to_another_null_string) \
+    X(not_be_equal_to_a_null_string) \
+    X(not_be_equal_strings) \
+    X(be_equal_strings) \
+    X(append_char_to_string) \
+    X(append_to_string) \
+    X(create_and_destroy_string) \
+    X(create_a_null_string) \
+    X(create_a_string_from_another_string) \
+    X(create_an_empty_string) \
+    X(read_string_from_file) \
+    X(return_null_string_from_nonexistent_file) \
+    X(create_a_string) \
+    X(convert_string_to_upper) \
+    X(convert_string_to_lower) \
+    X(convert_null_string_to_upper) \
+    X(convert_null_string_to_lower) \
+    X(convert_empty_string_to_upper) \
+    X(detect_upper_chars) \
+    X(not_detect_non_upper_chars) \
+    X(get_char_at_index) \
+    X(get_null_char_at_out_of_bounds) \
+    X(get_null_char_at_on_empty_string) \
+    X(read_empty_file) \
+    X(to_upper_preserves_non_alpha) \
+    X(to_lower_preserves_non_alpha) \
+    X(to_upper_already_upper) \
+    X(to_lower_already_lower) \
+    X(not_slice_null_string) \
+    X(clone_an_empty_string) \
+    X(be_equal_empty_strings) \
+    X(not_find_index_of_empty_needle) \
+    X(not_find_index_of_longer_needle) \
+    X(find_index_of_string_at_start) \
+    X(find_index_of_string_at_end) \
+    X(contain_empty_needle) \
+    X(not_contain_longer_needle) \
+    X(contain_string_at_start) \
+    X(contain_string_at_end) \
+    X(contain_full_string) \
+    X(detect_lower_chars) \
+    X(not_detect_non_lower_chars) \
+    X(be_empty_str) \
+    X(not_be_empty_str)
+
 should(create_a_full_slice) {
     string s = str("Hello, World!");
     string sliced = slice_str(s, 0, 13);
@@ -443,6 +514,27 @@ should(not_detect_non_upper_chars) {
     expect(!is_upper('!'));
 }
 
+should(get_char_at_index) {
+    string s = str("Hello");
+
+    expect(char_at(s, 0) == 'H');
+    expect(char_at(s, 4) == 'o');
+    expect(char_at(s, 2) == 'l');
+}
+
+should(get_null_char_at_out_of_bounds) {
+    string s = str("Hello");
+
+    expect(char_at(s, 5) == '\0');
+    expect(char_at(s, 100) == '\0');
+}
+
+should(get_null_char_at_on_empty_string) {
+    string s = empty_str();
+
+    expect(char_at(s, 0) == '\0');
+}
+
 should(read_empty_file) {
     string s = from_file("test/fixtures/empty.txt");
 
@@ -509,6 +601,7 @@ should(clone_an_empty_string) {
 should(be_equal_empty_strings) {
     expect(str_eq(empty_str(), empty_str()));
 }
+
 
 should(not_find_index_of_empty_needle) {
     string s = str("Hello, World!");
@@ -582,72 +675,75 @@ should(not_be_empty_str) {
 }
 
 int main() {
-    run_test(create_and_destroy_string);
-    run_test(append_to_string);
-    run_test(create_a_string);
-    run_test(create_an_empty_string);
-    run_test(create_a_string_from_another_string);
-    run_test(create_a_null_string);
-    run_test(be_equal_strings);
-    run_test(not_be_equal_strings);
-    run_test(not_destroy_non_heap_allocated_string);
-    run_test(not_destroy_destroyed_string);
-    run_test(not_be_equal_to_a_null_string);
-    run_test(not_append_char_on_non_allocated_string);
-    run_test(not_append_on_non_allocated_string);
-    run_test(create_zero_capacity_string);
-    run_test(append_char_to_string);
-    run_test(be_equal_to_another_null_string);
-    run_test(append_multiple_strings);
-    run_test(not_append_empty_string);
-    run_test(read_string_from_file);
-    run_test(return_null_string_from_nonexistent_file);
-    run_test(clone_a_non_heap_allocated_string);
-    run_test(clone_a_heap_allocated_string);
-    run_test(clone_a_null_string);
-    run_test(contain_another_string);
-    run_test(contain_chars);
-    run_test(not_contain_chars);
-    run_test(be_an_allocated_string);
-    run_test(not_be_an_allocated_string);
-    run_test(find_index_of_string);
-    run_test(not_find_index_of_string);
-    run_test(find_index_of_char);
-    run_test(not_find_index_of_char);
-    run_test(create_a_slice);
-    run_test(not_create_slice_when_start_is_larger_than_end);
-    run_test(create_empty_slice_when_start_is_same_as_end);
-    run_test(create_empty_slice_if_end_is_too_large);
-    run_test(slice_single_char);
-    run_test(create_a_full_slice);
-    run_test(convert_string_to_upper);
-    run_test(convert_string_to_lower);
-    run_test(convert_null_string_to_upper);
-    run_test(convert_null_string_to_lower);
-    run_test(convert_empty_string_to_upper);
-    run_test(read_empty_file);
-    run_test(to_upper_preserves_non_alpha);
-    run_test(to_lower_preserves_non_alpha);
-    run_test(to_upper_already_upper);
-    run_test(to_lower_already_lower);
-    run_test(not_slice_null_string);
-    run_test(clone_an_empty_string);
-    run_test(be_equal_empty_strings);
-    run_test(not_find_index_of_empty_needle);
-    run_test(not_find_index_of_longer_needle);
-    run_test(find_index_of_string_at_start);
-    run_test(find_index_of_string_at_end);
-    run_test(contain_empty_needle);
-    run_test(not_contain_longer_needle);
-    run_test(contain_string_at_start);
-    run_test(contain_string_at_end);
-    run_test(contain_full_string);
-    run_test(detect_lower_chars);
-    run_test(not_detect_non_lower_chars);
-    run_test(detect_upper_chars);
-    run_test(not_detect_non_upper_chars);
-    run_test(be_empty_str);
-    run_test(not_be_empty_str);
+  run_test(create_a_full_slice);
+  run_test(slice_single_char);
+  run_test(create_empty_slice_if_end_is_too_large);
+  run_test(create_empty_slice_when_start_is_same_as_end);
+  run_test(not_create_slice_when_start_is_larger_than_end);
+  run_test(create_a_slice);
+  run_test(not_find_index_of_char);
+  run_test(find_index_of_char);
+  run_test(not_find_index_of_string);
+  run_test(find_index_of_string);
+  run_test(not_be_an_allocated_string);
+  run_test(be_an_allocated_string);
+  run_test(not_contain_chars);
+  run_test(contain_chars);
+  run_test(contain_another_string);
+  run_test(clone_a_null_string);
+  run_test(clone_a_heap_allocated_string);
+  run_test(clone_a_non_heap_allocated_string);
+  run_test(not_append_empty_string);
+  run_test(create_zero_capacity_string);
+  run_test(not_append_on_non_allocated_string);
+  run_test(not_append_char_on_non_allocated_string);
+  run_test(not_destroy_destroyed_string);
+  run_test(not_destroy_non_heap_allocated_string);
+  run_test(append_multiple_strings);
+  run_test(be_equal_to_another_null_string);
+  run_test(not_be_equal_to_a_null_string);
+  run_test(not_be_equal_strings);
+  run_test(be_equal_strings);
+  run_test(append_char_to_string);
+  run_test(append_to_string);
+  run_test(create_and_destroy_string);
+  run_test(create_a_null_string);
+  run_test(create_a_string_from_another_string);
+  run_test(create_an_empty_string);
+  run_test(read_string_from_file);
+  run_test(return_null_string_from_nonexistent_file);
+  run_test(create_a_string);
+  run_test(convert_string_to_upper);
+  run_test(convert_string_to_lower);
+  run_test(convert_null_string_to_upper);
+  run_test(convert_null_string_to_lower);
+  run_test(convert_empty_string_to_upper);
+  run_test(detect_upper_chars);
+  run_test(not_detect_non_upper_chars);
+  run_test(get_char_at_index);
+  run_test(get_null_char_at_out_of_bounds);
+  run_test(get_null_char_at_on_empty_string);
+  run_test(read_empty_file);
+  run_test(to_upper_preserves_non_alpha);
+  run_test(to_lower_preserves_non_alpha);
+  run_test(to_upper_already_upper);
+  run_test(to_lower_already_lower);
+  run_test(not_slice_null_string);
+  run_test(clone_an_empty_string);
+  run_test(be_equal_empty_strings);
+  run_test(not_find_index_of_empty_needle);
+  run_test(not_find_index_of_longer_needle);
+  run_test(find_index_of_string_at_start);
+  run_test(find_index_of_string_at_end);
+  run_test(contain_empty_needle);
+  run_test(not_contain_longer_needle);
+  run_test(contain_string_at_start);
+  run_test(contain_string_at_end);
+  run_test(contain_full_string);
+  run_test(detect_lower_chars);
+  run_test(not_detect_non_lower_chars);
+  run_test(be_empty_str);
+  run_test(not_be_empty_str);
 
-    return conclude_test_runner();
+  return conclude_test_runner();
 }

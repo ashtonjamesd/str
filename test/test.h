@@ -49,6 +49,6 @@ int conclude_test_runner() {
 
 #define expect_null(expr) expect((expr) == NULL)
 #define expect_not_null(expr) expect((expr) != NULL)
-#define expect_str_eq(a, b) expect(strcmp((a ? a : ""), (b ? b : "")) == 0)
+#define expect_str_eq(a, b) expect(strcmp((a), (b)) == 0)
 
 #endif

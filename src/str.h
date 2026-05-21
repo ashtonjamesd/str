@@ -66,6 +66,7 @@ bool is_null_str(string s);
 bool is_empty_str(string s);
 bool is_upper(char c);
 bool is_lower(char c);
+char char_at(string s, size_t idx);
 
 string to_upper_str(string s);
 string to_lower_str(string s);

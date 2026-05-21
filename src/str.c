@@ -1,5 +1,10 @@
 #include "str.h"
 
+char char_at(string s, size_t idx) {
+    if (idx >= s.len) return '\0';
+    return s.val[idx];
+}
+
 bool is_upper(char c) {
     return c >= 'A' and c <= 'Z';
 }

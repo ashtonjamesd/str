@@ -13,6 +13,8 @@ all:
 	$(CC) $(SRC) -o $(OUT)
 
 test:
+	python3 generate_main.py 
+
 	mkdir -p build
 	$(CC) $(TEST_SRC) -o $(TEST_OUT)
 	./$(TEST_OUT)
