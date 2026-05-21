@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 typedef struct {
     // the internal c-string representation
@@ -28,5 +29,6 @@ String create_str(size_t cap);
 void destroy_str(String *s);
 
 void append_str(String *dest, String src);
+bool str_eq(String a, String b);
 
 #endif

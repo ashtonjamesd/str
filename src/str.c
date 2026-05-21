@@ -24,6 +24,10 @@ void append_str(String *dest, String src) {
     }
 }
 
+bool str_eq(String a, String b) {
+    return strcmp(a.val, b.val) == 0;
+}
+
 void destroy_str(String *s) {
     free(s->val);
 
