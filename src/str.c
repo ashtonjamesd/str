@@ -14,6 +14,7 @@ string create_str(size_t capacity) {
 
 bool append_str(string *dest, string src) {
     if (dest->capacity == 0) return false;
+    if (str_eq(src, empty_str())) return true;
 
     for (size_t i = 0; i < src.len; i++) {
         if (dest->len == dest->capacity) {
@@ -69,7 +70,7 @@ bool destroy_str(string *s) {
     return true;
 }
 
-static string from_file(char *path) {
+string from_file(char *path) {
     FILE *fptr = fopen(path, "r");
     if (!fptr) {
         return null_str();

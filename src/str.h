@@ -42,7 +42,7 @@ typedef string string;
 
 #define each_char_in(s) size_t i = 0; i < s.len; i++
 
-static string from_file(char *path);
+string from_file(char *path);
 
 string create_str(size_t capacity);
 bool destroy_str(string *s);
