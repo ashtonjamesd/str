@@ -67,7 +67,5 @@ int main() {
     run_test(test_str_from);
     run_test(test_nullstr);
 
-    conclude_test_runner();
-
-    return 0;
+    return conclude_test_runner();
 }

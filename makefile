@@ -15,3 +15,4 @@ all:
 test:
 	mkdir -p build
 	$(CC) $(TEST_SRC) -o $(TEST_OUT)
+	./$(TEST_OUT)
