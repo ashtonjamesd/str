@@ -31,6 +31,7 @@ typedef struct {
 
 } string;
 
+// typedef'd String
 typedef string string;
 
 #define make_str(_val, _len) (string) { .val = _val, .len = _len, .capacity = 0 }
@@ -62,5 +63,11 @@ int index_of_str(string haystack, string needle);
 
 bool str_eq(string a, string b);
 bool is_null_str(string s);
+bool is_empty_str(string s);
+bool is_upper(char c);
+bool is_lower(char c);
+
+string to_upper_str(string s);
+string to_lower_str(string s);
 
 #endif

@@ -1,5 +1,24 @@
 #include "str.h"
 
+bool is_upper(char c) {
+    return c >= 'A' and c <= 'Z';
+}
+
+bool is_lower(char c) {
+    return c >= 'a' and c <= 'z';
+}
+
+char to_upper(char c) {
+    if (is_upper(c) or !is_lower(c)) return c;
+    return c - 32;
+}
+
+char to_lower(char c) {
+    if (!is_upper(c) or is_lower(c)) return c;
+
+    return c + 32;
+}
+
 string create_str(size_t capacity) {
     const string s = {
         .capacity = capacity,
@@ -153,6 +172,10 @@ bool is_null_str(string s) {
     return s.val == NULL;
 }
 
+bool is_empty_str(string s) {
+    return s.len == 0;
+}
+
 string slice_str(string s, size_t start, size_t end) {
     if (start == end) return empty_str();
     if (end < start) return null_str();
@@ -163,6 +186,30 @@ string slice_str(string s, size_t start, size_t end) {
     
     for (size_t i = start; i < end; i++) {
         append_char(&new_s, s.val[i]);
+    }
+
+    return new_s;
+}
+
+string to_upper_str(string s) {
+    if (is_null_str(s)) return null_str();
+
+    string new_s = create_str(s.len + 1);
+
+    for (each_char_in(s, i)) {
+        append_char(&new_s, to_upper(s.val[i]));
+    }
+
+    return new_s;
+}
+
+string to_lower_str(string s) {
+    if (is_null_str(s)) return null_str();
+
+    string new_s = create_str(s.len + 1);
+
+    for (each_char_in(s, i)) {
+        append_char(&new_s, to_lower(s.val[i]));
     }
 
     return new_s;

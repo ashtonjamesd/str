@@ -389,6 +389,198 @@ should(create_a_string) {
     expect_str_eq(s.val, "Hello, World!");
 }
 
+should(convert_string_to_upper) {
+    string s = str("Hello, World!");
+    string upper = to_upper_str(s);
+
+    expect_str_eq(upper.val, "HELLO, WORLD!");
+
+    destroy_str(&upper);
+}
+
+should(convert_string_to_lower) {
+    string s = str("Hello, World!");
+    string lower = to_lower_str(s);
+
+    expect_str_eq(lower.val, "hello, world!");
+
+    destroy_str(&lower);
+}
+
+should(convert_null_string_to_upper) {
+    string s = null_str();
+    string upper = to_upper_str(s);
+
+    expect_null(upper.val);
+}
+
+should(convert_null_string_to_lower) {
+    string s = null_str();
+    string lower = to_lower_str(s);
+
+    expect_null(lower.val);
+}
+
+should(convert_empty_string_to_upper) {
+    string s = str("");
+    string upper = to_upper_str(s);
+
+    expect_str_eq(upper.val, "");
+
+    destroy_str(&upper);
+}
+
+should(detect_upper_chars) {
+    expect(is_upper('A'));
+    expect(is_upper('Z'));
+    expect(is_upper('M'));
+}
+
+should(not_detect_non_upper_chars) {
+    expect(!is_upper('a'));
+    expect(!is_upper('z'));
+    expect(!is_upper('5'));
+    expect(!is_upper('!'));
+}
+
+should(read_empty_file) {
+    string s = from_file("test/fixtures/empty.txt");
+
+    expect(s.len == 0);
+    expect_str_eq(s.val, "");
+
+    destroy_str(&s);
+}
+
+should(to_upper_preserves_non_alpha) {
+    string s = str("abc 123 !@#");
+    string upper = to_upper_str(s);
+
+    expect_str_eq(upper.val, "ABC 123 !@#");
+
+    destroy_str(&upper);
+}
+
+should(to_lower_preserves_non_alpha) {
+    string s = str("ABC 123 !@#");
+    string lower = to_lower_str(s);
+
+    expect_str_eq(lower.val, "abc 123 !@#");
+
+    destroy_str(&lower);
+}
+
+should(to_upper_already_upper) {
+    string s = str("HELLO");
+    string upper = to_upper_str(s);
+
+    expect_str_eq(upper.val, "HELLO");
+
+    destroy_str(&upper);
+}
+
+should(to_lower_already_lower) {
+    string s = str("hello");
+    string lower = to_lower_str(s);
+
+    expect_str_eq(lower.val, "hello");
+
+    destroy_str(&lower);
+}
+
+should(not_slice_null_string) {
+    string s = null_str();
+    string sliced = slice_str(s, 0, 5);
+
+    expect_null(sliced.val);
+}
+
+should(clone_an_empty_string) {
+    string s = str("");
+    string cloned = clone_str(s);
+
+    expect(cloned.len == 0);
+    expect(cloned.capacity == 1);
+    expect_str_eq(cloned.val, "");
+
+    destroy_str(&cloned);
+}
+
+should(be_equal_empty_strings) {
+    expect(str_eq(empty_str(), empty_str()));
+}
+
+should(not_find_index_of_empty_needle) {
+    string s = str("Hello, World!");
+    expect(index_of_str(s, empty_str()) == -1);
+}
+
+should(not_find_index_of_longer_needle) {
+    string s = str("Hi");
+    expect(index_of_str(s, str("Hello, World!")) == -1);
+}
+
+should(find_index_of_string_at_start) {
+    string s = str("Hello, World!");
+    expect(index_of_str(s, str("Hello")) == 0);
+}
+
+should(find_index_of_string_at_end) {
+    string s = str("Hello, World!");
+    expect(index_of_str(s, str("World!")) == 7);
+}
+
+should(contain_empty_needle) {
+    string haystack = str("Hello, World!");
+    expect(contains_str(haystack, empty_str()));
+}
+
+should(not_contain_longer_needle) {
+    string haystack = str("Hi");
+    string needle = str("Hello, World!");
+    expect(!contains_str(haystack, needle));
+}
+
+should(contain_string_at_start) {
+    string haystack = str("Hello, World!");
+    string needle = str("Hello");
+    expect(contains_str(haystack, needle));
+}
+
+should(contain_string_at_end) {
+    string haystack = str("Hello, World!");
+    string needle = str("World!");
+    expect(contains_str(haystack, needle));
+}
+
+should(contain_full_string) {
+    string haystack = str("Hello, World!");
+    string needle = str("Hello, World!");
+    expect(contains_str(haystack, needle));
+}
+
+should(detect_lower_chars) {
+    expect(is_lower('a'));
+    expect(is_lower('z'));
+    expect(is_lower('m'));
+}
+
+should(not_detect_non_lower_chars) {
+    expect(!is_lower('A'));
+    expect(!is_lower('Z'));
+    expect(!is_lower('5'));
+    expect(!is_lower('!'));
+}
+
+should(be_empty_str) {
+    expect(is_empty_str(empty_str()));
+    expect(is_empty_str(null_str()));
+}
+
+should(not_be_empty_str) {
+    expect(!is_empty_str(str("Hello")));
+}
+
 int main() {
     run_test(create_and_destroy_string);
     run_test(append_to_string);
@@ -428,6 +620,34 @@ int main() {
     run_test(create_empty_slice_if_end_is_too_large);
     run_test(slice_single_char);
     run_test(create_a_full_slice);
+    run_test(convert_string_to_upper);
+    run_test(convert_string_to_lower);
+    run_test(convert_null_string_to_upper);
+    run_test(convert_null_string_to_lower);
+    run_test(convert_empty_string_to_upper);
+    run_test(read_empty_file);
+    run_test(to_upper_preserves_non_alpha);
+    run_test(to_lower_preserves_non_alpha);
+    run_test(to_upper_already_upper);
+    run_test(to_lower_already_lower);
+    run_test(not_slice_null_string);
+    run_test(clone_an_empty_string);
+    run_test(be_equal_empty_strings);
+    run_test(not_find_index_of_empty_needle);
+    run_test(not_find_index_of_longer_needle);
+    run_test(find_index_of_string_at_start);
+    run_test(find_index_of_string_at_end);
+    run_test(contain_empty_needle);
+    run_test(not_contain_longer_needle);
+    run_test(contain_string_at_start);
+    run_test(contain_string_at_end);
+    run_test(contain_full_string);
+    run_test(detect_lower_chars);
+    run_test(not_detect_non_lower_chars);
+    run_test(detect_upper_chars);
+    run_test(not_detect_non_upper_chars);
+    run_test(be_empty_str);
+    run_test(not_be_empty_str);
 
     return conclude_test_runner();
 }
