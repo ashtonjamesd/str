@@ -1,6 +1,91 @@
 #include "test.h"
 #include "../src/str.h"
 
+should(create_a_full_slice) {
+    string s = str("Hello, World!");
+    string sliced = slice_str(s, 0, 13);
+
+    expect_str_eq(sliced.val, "Hello, World!");
+}
+
+should(slice_single_char) {
+    string s = str("Hello, World!");
+    string sliced = slice_str(s, 0, 1);
+
+    expect_str_eq(sliced.val, "H");
+}
+
+should(create_empty_slice_if_end_is_too_large) {
+    string s = str("Hello, World!");
+    string sliced = slice_str(s, 0, 500);
+
+    expect_null(sliced.val);
+}
+
+should(create_empty_slice_when_start_is_same_as_end) {
+    string s = str("Hello, World!");
+    string sliced = slice_str(s, 5, 5);
+
+    expect_str_eq(sliced.val, "");
+}
+
+should(not_create_slice_when_start_is_larger_than_end) {
+    string s = str("Hello, World!");
+    string sliced = slice_str(s, 10, 9);
+
+    expect_null(sliced.val);
+}
+
+should(create_a_slice) {
+    string s = str("Hello, World!");
+    string sliced = slice_str(s, 7, 12);
+
+    expect_not_null(sliced.val);
+    expect_str_eq(sliced.val, "World");
+}
+
+should(not_find_index_of_char) {
+    string s1 = str("Hello, World!");
+
+    int index = index_of_char(s1, 'X');
+    expect(index == -1);
+}
+
+should(find_index_of_char) {
+    string s1 = str("Hello, World!");
+
+    int index = index_of_char(s1, ',');
+    expect(index == 5);
+}
+
+should(not_find_index_of_string) {
+    string s1 = str("Hello, World!");
+    string s2 = str("x");
+
+    int index = index_of_str(s1, s2);
+    expect(index == -1);
+}
+
+should(find_index_of_string) {
+    string s1 = str("Hello, World!");
+    string s2 = str("Wor");
+
+    int index = index_of_str(s1, s2);
+    expect(index == 7);
+}
+
+should(not_be_an_allocated_string) {
+    expect(
+        !is_allocated_str(str("Hello, World!"))
+    )
+}
+
+should(be_an_allocated_string) {
+    expect(
+        is_allocated_str(clone_str(str("Hello, World!")))
+    )
+}
+
 should(not_contain_chars) {
     string haystack = str("Hello, World!");
 
@@ -331,6 +416,18 @@ int main() {
     run_test(contain_another_string);
     run_test(contain_chars);
     run_test(not_contain_chars);
+    run_test(be_an_allocated_string);
+    run_test(not_be_an_allocated_string);
+    run_test(find_index_of_string);
+    run_test(not_find_index_of_string);
+    run_test(find_index_of_char);
+    run_test(not_find_index_of_char);
+    run_test(create_a_slice);
+    run_test(not_create_slice_when_start_is_larger_than_end);
+    run_test(create_empty_slice_when_start_is_same_as_end);
+    run_test(create_empty_slice_if_end_is_too_large);
+    run_test(slice_single_char);
+    run_test(create_a_full_slice);
 
     return conclude_test_runner();
 }

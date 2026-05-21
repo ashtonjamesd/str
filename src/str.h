@@ -46,14 +46,21 @@ string from_file(char *path);
 
 string create_str(size_t capacity);
 bool destroy_str(string *s);
+bool is_allocated_str(string s);
 
 string clone_str(string s);
+string slice_str(string s, size_t start, size_t end);
+
 bool contains_str(string haystack, string needle);
-bool contains_char(string haystack, char c);
+bool contains_char(string haystack, char needle);
 
 bool append_str(string *dest, string src);
-bool append_char(string *dest, char c);
+bool append_char(string *dest, char needle);
+
+int index_of_char(string haystack, char needle);
+int index_of_str(string haystack, string needle);
 
 bool str_eq(string a, string b);
+bool is_null_str(string s);
 
 #endif

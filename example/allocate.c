@@ -1,6 +1,7 @@
 #include "str.h"
 
 int main() {
+
     // creates a heap-allocated string
     string s = create_str(14);
 

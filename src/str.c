@@ -33,7 +33,7 @@ bool append_str(string *dest, string src) {
     return true;
 }
 
-bool append_char(string *dest, char c) {
+bool append_char(string *dest, char needle) {
     if (dest->capacity == 0) return false;
 
     if (dest->len == dest->capacity) {
@@ -41,12 +41,40 @@ bool append_char(string *dest, char c) {
         dest->val = realloc(dest->val, dest->capacity);
     }
 
-    dest->val[dest->len] = c;
+    dest->val[dest->len] = needle;
     dest->len += 1;
 
     dest->val[dest->len] = '\0';
 
     return true;
+}
+
+int index_of_char(string haystack, char needle) {
+    for (each_char_in(haystack, i)) {
+        if (needle == haystack.val[i]) return i;
+    }
+
+    return -1;
+}
+
+int index_of_str(string haystack, string needle) {
+    if (needle.len == 0) return -1;
+    if (needle.len > haystack.len) return -1;
+
+    for (size_t i = 0; i <= haystack.len - needle.len; i++) {
+
+        bool contains = true;
+        for (each_char_in(needle, j)) {
+            if (haystack.val[i + j] != needle.val[j]) {
+                contains = false;
+                break;
+            }
+        }
+
+        if (contains) return i;
+    }
+
+    return -1;
 }
 
 bool str_eq(string a, string b) {
@@ -70,6 +98,10 @@ bool destroy_str(string *s) {
     return true;
 }
 
+bool is_allocated_str(string s) {
+    return s.capacity > 0;
+}
+
 bool contains_str(string haystack, string needle) {
     if (needle.len == 0) return true;
     if (needle.len > haystack.len) return false;
@@ -90,9 +122,9 @@ bool contains_str(string haystack, string needle) {
     return false;
 }
 
-bool contains_char(string haystack, char c) {
+bool contains_char(string haystack, char needle) {
     for (each_char_in(haystack, i)) {
-        if (c == haystack.val[i]) return true;
+        if (needle == haystack.val[i]) return true;
     }
 
     return false;
@@ -113,6 +145,25 @@ string clone_str(string s) {
     }
 
     memcpy(new_s.val, s.val, s.len);
+
+    return new_s;
+}
+
+bool is_null_str(string s) {
+    return s.val == NULL;
+}
+
+string slice_str(string s, size_t start, size_t end) {
+    if (start == end) return empty_str();
+    if (end < start) return null_str();
+    if (end > s.len) return null_str();
+    if (is_null_str(s)) return null_str();
+
+    string new_s = create_str(end - start + 1);
+    
+    for (size_t i = start; i < end; i++) {
+        append_char(&new_s, s.val[i]);
+    }
 
     return new_s;
 }
