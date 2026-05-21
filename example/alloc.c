@@ -1,7 +1,8 @@
 #include "str.h"
 
 int main() {
-    string s = create_str(4);
+    string s = create_str(14);
+    append_str(&s, str("Hello, World!"));
 
     for (each_char_in(s)) {
         putchar(s.val[i]);

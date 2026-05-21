@@ -5,30 +5,52 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <iso646.h>
 
+/*
+* a struct representing a string data type.
+*/
 typedef struct {
-    // the internal c-string representation
+
+    /*
+    *   the internal c-string representation.
+    */
     char *val;
+
+    /*
+    *   the length of the string.
+    *   this is managed internally and external modification should be prohibited.
+    */
     size_t len;
 
-    // the number of heap-allocated bytes for this string
+    /*
+    *   the number of heap-allocated bytes for this string.
+    *   this is managed internally and external modification should be prohibited.
+    */
     size_t cap;
-} String;
 
-#define _make_str(_val, _len) (String) { .val = _val, .len = _len, .cap = 0 }
+} string;
 
-#define str(s)      _make_str(s, sizeof(s) - 1)
-#define nullstr()   _make_str(NULL, 0)
-#define str_from(s) _make_str(s.val, s.len)
-#define str_empty() _make_str("", 0)
+typedef string string;
+
+#define make_str(_val, _len) (string) { .val = _val, .len = _len, .cap = 0 }
+
+#define str(s)      make_str(s, sizeof(s) - 1)
+#define null_str()  make_str(NULL, 0)
+#define from_str(s) make_str(s.val, s.len)
+#define empty_str() make_str("", 0)
+
+static string from_file(char *path);
 
 #define each_char_in(s) size_t i = 0; i < s.len; i++
 #define print_str(s) printf("%s", s.val)
 
-String create_str(size_t cap);
-void destroy_str(String *s);
+string create_str(size_t cap);
+bool destroy_str(string *s);
 
-void append_str(String *dest, String src);
-bool str_eq(String a, String b);
+bool append_str(string *dest, string src);
+bool append_char(string *dest, char c);
+
+bool str_eq(string a, string b);
 
 #endif

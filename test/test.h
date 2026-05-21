@@ -42,16 +42,12 @@ int conclude_test_runner() {
     printf("assertion failed (%s:%d): '%s'\n", __FILE__, __LINE__, #expr); \
 }
 
-#define expect_null(expr) if ((expr) != NULL) { \
-    runner.assertions_failed += 1; \
-    printf("assertion failed (%s:%d): '%s'\n", __FILE__, __LINE__, #expr); \
-}
-
-#define expect_str_eq(a, b) expect(strcmp((a), (b)) == 0)
-
 #define expect_not(expr) if ((expr)) { \
     runner.assertions_failed += 1; \
     printf("assertion failed (%s:%d): '%s'\n", __FILE__, __LINE__, #expr); \
 }
+
+#define expect_null(expr) expect((expr) == NULL)
+#define expect_str_eq(a, b) expect(strcmp((a), (b)) == 0)
 
 #endif
