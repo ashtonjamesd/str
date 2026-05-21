@@ -3,5 +3,11 @@
 int main() {
     // declares a non-heap-allocated string
     string s = str("Hello, World!\n");
+
+    // iterates through each character in the string
+    for (each_char_in(s)) {
+        putchar(s.val[i]);
+    }
+
     return 0;
 }

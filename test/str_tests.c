@@ -5,7 +5,7 @@ should(create_zero_capacity_string) {
     string s = create_str(0);
 
     expect(s.len == 0);
-    expect(s.cap == 0);
+    expect(s.capacity == 0);
     expect_str_eq(s.val, "");
 }
 
@@ -25,7 +25,7 @@ should(not_destroy_destroyed_string) {
     bool destroyed_again = destroy_str(&s);
     expect(!destroyed_again);
 
-    expect(s.cap == 0);
+    expect(s.capacity == 0);
     expect(s.len == 0);
     expect_null(s.val);
 }
@@ -94,12 +94,12 @@ should(append_to_string) {
     expect(appended);
 
     expect(s.len == 13);
-    expect(s.cap == 14);
+    expect(s.capacity == 14);
 
     destroy_str(&s);
 
     expect(s.len == 0);
-    expect(s.cap == 0);
+    expect(s.capacity == 0);
     expect_null(s.val);
 }
 
@@ -107,19 +107,19 @@ should(create_and_destroy_string) {
     string s = create_str(10);
 
     expect(s.len == 0);
-    expect(s.cap == 10);
+    expect(s.capacity == 10);
 
     destroy_str(&s);
 
     expect(s.len == 0);
-    expect(s.cap == 0);
+    expect(s.capacity == 0);
     expect_null(s.val);
 }
 
 should(create_a_nullstr) {
     string s = null_str();
 
-    expect(s.cap == 0);
+    expect(s.capacity == 0);
     expect(s.len == 0);
     expect_null(s.val);
 }
@@ -135,7 +135,7 @@ should(create_an_empty_string) {
     string s = empty_str();
 
     expect(s.len == 0);
-    expect(s.cap == 0);
+    expect(s.capacity == 0);
     expect_str_eq(s.val, "");
 }
 
@@ -143,7 +143,7 @@ should(create_a_str) {
     string s = str("Hello, World!");
 
     expect(s.len == 13);
-    expect(s.cap == 0);
+    expect(s.capacity == 0);
     expect_str_eq(s.val, "Hello, World!");
 }
 

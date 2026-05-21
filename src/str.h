@@ -27,25 +27,24 @@ typedef struct {
     *   the number of heap-allocated bytes for this string.
     *   this is managed internally and external modification should be prohibited.
     */
-    size_t cap;
+    size_t capacity;
 
 } string;
 
 typedef string string;
 
-#define make_str(_val, _len) (string) { .val = _val, .len = _len, .cap = 0 }
+#define make_str(_val, _len) (string) { .val = _val, .len = _len, .capacity = 0 }
 
 #define str(s)      make_str(s, sizeof(s) - 1)
 #define null_str()  make_str(NULL, 0)
 #define from_str(s) make_str(s.val, s.len)
 #define empty_str() make_str("", 0)
 
+#define each_char_in(s) size_t i = 0; i < s.len; i++
+
 static string from_file(char *path);
 
-#define each_char_in(s) size_t i = 0; i < s.len; i++
-#define print_str(s) printf("%s", s.val)
-
-string create_str(size_t cap);
+string create_str(size_t capacity);
 bool destroy_str(string *s);
 
 bool append_str(string *dest, string src);

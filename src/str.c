@@ -1,10 +1,10 @@
 #include "str.h"
 
-string create_str(size_t cap) {
+string create_str(size_t capacity) {
     string s = {
-        .cap = cap,
+        .capacity = capacity,
         .len = 0,
-        .val = calloc(cap, 1),
+        .val = calloc(capacity, 1),
     };
 
     s.val[0] = '\0';
@@ -13,14 +13,14 @@ string create_str(size_t cap) {
 }
 
 bool append_str(string *dest, string src) {
-    if (dest->cap == 0) return false;
+    if (dest->capacity == 0) return false;
 
     for (size_t i = 0; i < src.len; i++) {
-        if (dest->len == dest->cap) {
-            const size_t new_cap = (dest->cap * 2) + src.len;
+        if (dest->len == dest->capacity) {
+            const size_t new_cap = (dest->capacity * 2) + src.len;
 
-            dest->cap = new_cap;
-            dest->val = realloc(dest->val, dest->cap);
+            dest->capacity = new_cap;
+            dest->val = realloc(dest->val, dest->capacity);
         }
 
         dest->val[dest->len] = src.val[i];
@@ -33,11 +33,11 @@ bool append_str(string *dest, string src) {
 }
 
 bool append_char(string *dest, char c) {
-    if (dest->cap == 0) return false;
+    if (dest->capacity == 0) return false;
 
-    if (dest->len == dest->cap) {
-        dest->cap *= 2;
-        dest->val = realloc(dest->val, dest->cap);
+    if (dest->len == dest->capacity) {
+        dest->capacity *= 2;
+        dest->val = realloc(dest->val, dest->capacity);
     }
 
     dest->val[dest->len] = c;
@@ -58,11 +58,11 @@ bool str_eq(string a, string b) {
 }
 
 bool destroy_str(string *s) {
-    if (s->cap == 0) return false;
+    if (s->capacity == 0) return false;
 
     free(s->val);
 
-    s->cap = 0;
+    s->capacity = 0;
     s->len = 0;
     s->val = NULL;
 
@@ -102,7 +102,7 @@ static string from_file(char *path) {
     string s = {
         .val = buf,
         .len = amount_read,
-        .cap = sz + 1,
+        .capacity = sz + 1,
     };
 
     return s;
