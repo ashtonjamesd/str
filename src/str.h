@@ -40,12 +40,16 @@ typedef string string;
 #define from_str(s) make_str(s.val, s.len)
 #define empty_str() make_str("", 0)
 
-#define each_char_in(s) size_t i = 0; i < s.len; i++
+#define each_char_in(s, i) size_t i = 0; i < s.len; i++
 
 string from_file(char *path);
 
 string create_str(size_t capacity);
 bool destroy_str(string *s);
+
+string clone_str(string s);
+bool contains_str(string haystack, string needle);
+bool contains_char(string haystack, char c);
 
 bool append_str(string *dest, string src);
 bool append_char(string *dest, char c);

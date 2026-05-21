@@ -1,6 +1,86 @@
 #include "test.h"
 #include "../src/str.h"
 
+should(not_contain_chars) {
+    string haystack = str("Hello, World!");
+
+    bool contains = contains_char(haystack, 'X');
+    expect(!contains);
+
+    contains = contains_char(haystack, 'Y');
+    expect(!contains);
+
+    contains = contains_char(haystack, 'Z');
+    expect(!contains);
+}
+
+should(contain_chars) {
+    string haystack = str("Hello, World!");
+
+    bool contains = contains_char(haystack, 'H');
+    expect(contains);
+
+    contains = contains_char(haystack, ' ');
+    expect(contains);
+
+    contains = contains_char(haystack, '!');
+    expect(contains);
+
+    contains = contains_char(haystack, 'l');
+    expect(contains);
+
+    contains = contains_char(haystack, ',');
+    expect(contains);
+}
+
+should(contain_another_string) {
+    string haystack = str("Hello, World!");
+    string needle = str("lo, Wor");
+
+    bool contains = contains_str(haystack, needle);
+    expect(contains);
+}
+
+should(clone_a_null_string) {
+    string s = null_str();
+    string cloned = clone_str(s);
+
+    expect(s.capacity == 0);
+    expect(s.len == 0);
+    expect_null(s.val);
+
+    bool destroyed = destroy_str(&cloned);
+    expect(destroyed);
+}
+
+should(clone_a_heap_allocated_string) {
+    string s = create_str(13);
+    append_str(&s, str("Hello, World!"));
+
+    string cloned = clone_str(s);
+
+    expect_str_eq(s.val, cloned.val);
+    expect(s.val != cloned.val);
+
+    bool destroyed = destroy_str(&cloned);
+    expect(destroyed);
+
+    destroyed = destroy_str(&s);
+    expect(destroyed);
+}
+
+should(clone_a_non_heap_allocated_string) {
+    string s = str("Hello, World!");
+    string cloned = clone_str(s);
+
+    expect(cloned.len == 13);
+    expect(cloned.capacity == 14);
+    expect_str_eq(s.val, cloned.val);
+
+    bool destroyed = destroy_str(&cloned);
+    expect(destroyed);
+}
+
 should(not_append_empty_string) {
     string s = create_str(3);
 
@@ -245,6 +325,12 @@ int main() {
     run_test(not_append_empty_string);
     run_test(read_string_from_file);
     run_test(return_null_string_from_nonexistent_file);
+    run_test(clone_a_non_heap_allocated_string);
+    run_test(clone_a_heap_allocated_string);
+    run_test(clone_a_null_string);
+    run_test(contain_another_string);
+    run_test(contain_chars);
+    run_test(not_contain_chars);
 
     return conclude_test_runner();
 }

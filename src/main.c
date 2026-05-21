@@ -3,7 +3,7 @@
 int main() {
     string s = create_str(4);
 
-    for (each_char_in(s)) {
+    for (each_char_in(s, i)) {
         putchar(s.val[i]);
     }
 

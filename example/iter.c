@@ -5,7 +5,7 @@ int main() {
     string s = str("Hello, World!\n");
 
     // iterates through each character in the string
-    for (each_char_in(s)) {
+    for (each_char_in(s, i)) {
         putchar(s.val[i]);
     }
 

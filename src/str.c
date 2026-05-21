@@ -1,7 +1,7 @@
 #include "str.h"
 
 string create_str(size_t capacity) {
-    string s = {
+    const string s = {
         .capacity = capacity,
         .len = 0,
         .val = calloc(capacity, 1),
@@ -68,6 +68,53 @@ bool destroy_str(string *s) {
     s->val = NULL;
 
     return true;
+}
+
+bool contains_str(string haystack, string needle) {
+    if (needle.len == 0) return true;
+    if (needle.len > haystack.len) return false;
+
+    for (size_t i = 0; i <= haystack.len - needle.len; i++) {
+
+        bool contains = true;
+        for (each_char_in(needle, j)) {
+            if (haystack.val[i + j] != needle.val[j]) {
+                contains = false;
+                break;
+            }
+        }
+
+        if (contains) return true;
+    }
+
+    return false;
+}
+
+bool contains_char(string haystack, char c) {
+    for (each_char_in(haystack, i)) {
+        if (c == haystack.val[i]) return true;
+    }
+
+    return false;
+}
+
+string clone_str(string s) {
+    size_t capacity = s.capacity;
+    if (s.capacity == 0) {
+        capacity = s.len + 1;
+    }
+
+    string new_s = create_str(capacity);
+    new_s.len = s.len;
+
+    if (!s.val) {
+        s.val = NULL;
+        return new_s;
+    }
+
+    memcpy(new_s.val, s.val, s.len);
+
+    return new_s;
 }
 
 string from_file(char *path) {
