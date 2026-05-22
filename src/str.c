@@ -171,6 +171,24 @@ bool starts_with_char(string haystack, char needle) {
     return haystack.val[0] == needle;
 }
 
+bool ends_with_str(string haystack, string s) {
+    if (s.len > haystack.len) return false;
+
+    size_t offset = haystack.len - s.len;
+    for (each_char_in(s, i)) {
+        if (haystack.val[offset + i] != s.val[i]) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+bool ends_with_char(string haystack, char needle) {
+    if (haystack.len == 0) return false;
+    return haystack.val[haystack.len - 1] == needle;
+}
+
 string clone_str(string s) {
     size_t capacity = s.capacity;
     if (s.capacity == 0) {
@@ -235,6 +253,48 @@ string to_lower_str(string s) {
     }
 
     return new_s;
+}
+
+static bool is_whitespace(char c) {
+    return c == ' ' or c == '\t' or c == '\n' or c == '\r';
+}
+
+string trim_left_str(string s) {
+    if (is_null_str(s)) return null_str();
+
+    size_t start = 0;
+    while (start < s.len and is_whitespace(s.val[start])) {
+        start++;
+    }
+
+    return slice_str(s, start, s.len);
+}
+
+string trim_right_str(string s) {
+    if (is_null_str(s)) return null_str();
+
+    size_t end = s.len;
+    while (end > 0 and is_whitespace(s.val[end - 1])) {
+        end--;
+    }
+
+    return slice_str(s, 0, end);
+}
+
+string trim_str(string s) {
+    if (is_null_str(s)) return null_str();
+
+    size_t start = 0;
+    while (start < s.len and is_whitespace(s.val[start])) {
+        start++;
+    }
+
+    size_t end = s.len;
+    while (end > start and is_whitespace(s.val[end - 1])) {
+        end--;
+    }
+
+    return slice_str(s, start, end);
 }
 
 string create_str_from_file(char *path) {

@@ -676,6 +676,190 @@ should(not_start_with_char_on_empty_string) {
     expect(!starts_with_char(s, 'H'));
 }
 
+should(end_with_suffix) {
+    string s = str("Hello, World!");
+
+    expect(ends_with_str(s, str("World!")));
+}
+
+should(end_with_full_string) {
+    string s = str("Hello, World!");
+
+    expect(ends_with_str(s, str("Hello, World!")));
+}
+
+should(end_with_single_char_str) {
+    string s = str("Hello, World!");
+
+    expect(ends_with_str(s, str("!")));
+}
+
+should(end_with_empty_suffix) {
+    string s = str("Hello, World!");
+
+    expect(ends_with_str(s, empty_str()));
+}
+
+should(not_end_with_wrong_suffix) {
+    string s = str("Hello, World!");
+
+    expect(!ends_with_str(s, str("Hello")));
+}
+
+should(not_end_with_longer_suffix) {
+    string s = str("Hi");
+
+    expect(!ends_with_str(s, str("Hello, World!")));
+}
+
+should(not_end_with_suffix_on_empty_string) {
+    string s = empty_str();
+
+    expect(!ends_with_str(s, str("Hello")));
+}
+
+should(empty_string_ends_with_empty) {
+    expect(ends_with_str(empty_str(), empty_str()));
+}
+
+should(end_with_char) {
+    string s = str("Hello, World!");
+
+    expect(ends_with_char(s, '!'));
+}
+
+should(not_end_with_wrong_char) {
+    string s = str("Hello, World!");
+
+    expect(!ends_with_char(s, 'H'));
+}
+
+should(not_end_with_char_on_empty_string) {
+    string s = empty_str();
+
+    expect(!ends_with_char(s, '!'));
+}
+
+should(trim_whitespace_from_both_sides) {
+    string s = str("  hello  ");
+    string trimmed = trim_str(s);
+
+    expect_str_eq(trimmed.val, "hello");
+
+    destroy_str(&trimmed);
+}
+
+should(trim_tabs_and_newlines) {
+    string s = str("\t\n hello \r\n");
+    string trimmed = trim_str(s);
+
+    expect_str_eq(trimmed.val, "hello");
+
+    destroy_str(&trimmed);
+}
+
+should(trim_string_with_no_whitespace) {
+    string s = str("hello");
+    string trimmed = trim_str(s);
+
+    expect_str_eq(trimmed.val, "hello");
+
+    destroy_str(&trimmed);
+}
+
+should(trim_all_whitespace_string) {
+    string s = str("   \t\n  ");
+    string trimmed = trim_str(s);
+
+    expect_str_eq(trimmed.val, "");
+
+    destroy_str(&trimmed);
+}
+
+should(trim_empty_string) {
+    string s = empty_str();
+    string trimmed = trim_str(s);
+
+    expect_str_eq(trimmed.val, "");
+
+    destroy_str(&trimmed);
+}
+
+should(trim_null_string) {
+    string s = null_str();
+    string trimmed = trim_str(s);
+
+    expect_null(trimmed.val);
+}
+
+should(trim_left_whitespace) {
+    string s = str("  hello  ");
+    string trimmed = trim_left_str(s);
+
+    expect_str_eq(trimmed.val, "hello  ");
+
+    destroy_str(&trimmed);
+}
+
+should(trim_left_tabs_and_newlines) {
+    string s = str("\t\n hello");
+    string trimmed = trim_left_str(s);
+
+    expect_str_eq(trimmed.val, "hello");
+
+    destroy_str(&trimmed);
+}
+
+should(trim_left_no_whitespace) {
+    string s = str("hello  ");
+    string trimmed = trim_left_str(s);
+
+    expect_str_eq(trimmed.val, "hello  ");
+
+    destroy_str(&trimmed);
+}
+
+should(trim_left_null_string) {
+    string s = null_str();
+    string trimmed = trim_left_str(s);
+
+    expect_null(trimmed.val);
+}
+
+should(trim_right_whitespace) {
+    string s = str("  hello  ");
+    string trimmed = trim_right_str(s);
+
+    expect_str_eq(trimmed.val, "  hello");
+
+    destroy_str(&trimmed);
+}
+
+should(trim_right_tabs_and_newlines) {
+    string s = str("hello\t\n ");
+    string trimmed = trim_right_str(s);
+
+    expect_str_eq(trimmed.val, "hello");
+
+    destroy_str(&trimmed);
+}
+
+should(trim_right_no_whitespace) {
+    string s = str("  hello");
+    string trimmed = trim_right_str(s);
+
+    expect_str_eq(trimmed.val, "  hello");
+
+    destroy_str(&trimmed);
+}
+
+should(trim_right_null_string) {
+    string s = null_str();
+    string trimmed = trim_right_str(s);
+
+    expect_null(trimmed.val);
+}
+
 
 int main() {
   run_test(create_a_full_slice);
@@ -758,6 +942,31 @@ int main() {
   run_test(start_with_char);
   run_test(not_start_with_wrong_char);
   run_test(not_start_with_char_on_empty_string);
+  run_test(end_with_suffix);
+  run_test(end_with_full_string);
+  run_test(end_with_single_char_str);
+  run_test(end_with_empty_suffix);
+  run_test(not_end_with_wrong_suffix);
+  run_test(not_end_with_longer_suffix);
+  run_test(not_end_with_suffix_on_empty_string);
+  run_test(empty_string_ends_with_empty);
+  run_test(end_with_char);
+  run_test(not_end_with_wrong_char);
+  run_test(not_end_with_char_on_empty_string);
+  run_test(trim_whitespace_from_both_sides);
+  run_test(trim_tabs_and_newlines);
+  run_test(trim_string_with_no_whitespace);
+  run_test(trim_all_whitespace_string);
+  run_test(trim_empty_string);
+  run_test(trim_null_string);
+  run_test(trim_left_whitespace);
+  run_test(trim_left_tabs_and_newlines);
+  run_test(trim_left_no_whitespace);
+  run_test(trim_left_null_string);
+  run_test(trim_right_whitespace);
+  run_test(trim_right_tabs_and_newlines);
+  run_test(trim_right_no_whitespace);
+  run_test(trim_right_null_string);
 
   return conclude_test_runner();
 }

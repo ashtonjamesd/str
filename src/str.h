@@ -84,6 +84,15 @@ string to_upper_str(string s);
 // allocates a new string that is 's' converted to lowercase
 string to_lower_str(string s);
 
+// allocates a new string with leading and trailing whitespace removed
+string trim_str(string s);
+
+// allocates a new string with leading whitespace removed
+string trim_left_str(string s);
+
+// allocates a new string with trailing whitespace removed
+string trim_right_str(string s);
+
 
 
 /*
@@ -128,6 +137,12 @@ bool starts_with_str(string haystack, string s);
 
 // true if a string starts with a character
 bool starts_with_char(string haystack, char needle);
+
+// true if a string ends with a string
+bool ends_with_str(string haystack, string s);
+
+// true if a string ends with a character
+bool ends_with_char(string haystack, char needle);
 
 // true if a string is equal to another string
 bool str_eq(string a, string b);
