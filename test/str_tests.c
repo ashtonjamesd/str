@@ -531,53 +531,61 @@ should(be_equal_empty_strings) {
     expect(str_eq(empty_str(), empty_str()));
 }
 
-
 should(not_find_index_of_empty_needle) {
     string s = str("Hello, World!");
+
     expect(index_of_str(s, empty_str()) == -1);
 }
 
 should(not_find_index_of_longer_needle) {
     string s = str("Hi");
+
     expect(index_of_str(s, str("Hello, World!")) == -1);
 }
 
 should(find_index_of_string_at_start) {
     string s = str("Hello, World!");
+
     expect(index_of_str(s, str("Hello")) == 0);
 }
 
 should(find_index_of_string_at_end) {
     string s = str("Hello, World!");
+
     expect(index_of_str(s, str("World!")) == 7);
 }
 
 should(contain_empty_needle) {
     string haystack = str("Hello, World!");
+
     expect(contains_str(haystack, empty_str()));
 }
 
 should(not_contain_longer_needle) {
     string haystack = str("Hi");
     string needle = str("Hello, World!");
+
     expect(!contains_str(haystack, needle));
 }
 
 should(contain_string_at_start) {
     string haystack = str("Hello, World!");
     string needle = str("Hello");
+
     expect(contains_str(haystack, needle));
 }
 
 should(contain_string_at_end) {
     string haystack = str("Hello, World!");
     string needle = str("World!");
+
     expect(contains_str(haystack, needle));
 }
 
 should(contain_full_string) {
     string haystack = str("Hello, World!");
     string needle = str("Hello, World!");
+
     expect(contains_str(haystack, needle));
 }
 
@@ -601,6 +609,71 @@ should(be_empty_str) {
 
 should(not_be_empty_str) {
     expect(!is_empty_str(str("Hello")));
+    expect(!is_empty_str(str(" ")));
+}
+
+should(start_with_prefix) {
+    string s = str("Hello, World!");
+
+    expect(starts_with_str(s, str("Hello")));
+}
+
+should(start_with_full_string) {
+    string s = str("Hello, World!");
+
+    expect(starts_with_str(s, str("Hello, World!")));
+}
+
+should(start_with_single_char_str) {
+    string s = str("Hello, World!");
+
+    expect(starts_with_str(s, str("H")));
+}
+
+should(start_with_empty_prefix) {
+    string s = str("Hello, World!");
+
+    expect(starts_with_str(s, empty_str()));
+}
+
+should(not_start_with_wrong_prefix) {
+    string s = str("Hello, World!");
+
+    expect(!starts_with_str(s, str("World")));
+}
+
+should(not_start_with_longer_prefix) {
+    string s = str("Hi");
+
+    expect(!starts_with_str(s, str("Hello, World!")));
+}
+
+should(not_start_with_prefix_on_empty_string) {
+    string s = empty_str();
+
+    expect(!starts_with_str(s, str("Hello")));
+}
+
+should(empty_string_starts_with_empty) {
+    expect(starts_with_str(empty_str(), empty_str()));
+}
+
+should(start_with_char) {
+    string s = str("Hello, World!");
+
+    expect(starts_with_char(s, 'H'));
+}
+
+should(not_start_with_wrong_char) {
+    string s = str("Hello, World!");
+
+    expect(!starts_with_char(s, 'W'));
+}
+
+should(not_start_with_char_on_empty_string) {
+    string s = empty_str();
+
+    expect(!starts_with_char(s, 'H'));
 }
 
 
@@ -674,6 +747,17 @@ int main() {
   run_test(not_detect_non_lower_chars);
   run_test(be_empty_str);
   run_test(not_be_empty_str);
+  run_test(start_with_prefix);
+  run_test(start_with_full_string);
+  run_test(start_with_single_char_str);
+  run_test(start_with_empty_prefix);
+  run_test(not_start_with_wrong_prefix);
+  run_test(not_start_with_longer_prefix);
+  run_test(not_start_with_prefix_on_empty_string);
+  run_test(empty_string_starts_with_empty);
+  run_test(start_with_char);
+  run_test(not_start_with_wrong_char);
+  run_test(not_start_with_char_on_empty_string);
 
   return conclude_test_runner();
 }

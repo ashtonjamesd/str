@@ -154,6 +154,23 @@ bool contains_char(string haystack, char needle) {
     return false;
 }
 
+bool starts_with_str(string haystack, string s){
+    if (s.len > haystack.len) return false;
+
+    for (each_char_in(s, i)) {
+        if (char_at(haystack, i) != char_at(s, i)) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+bool starts_with_char(string haystack, char needle) {
+    if (haystack.len == 0) return false;
+    return haystack.val[0] == needle;
+}
+
 string clone_str(string s) {
     size_t capacity = s.capacity;
     if (s.capacity == 0) {

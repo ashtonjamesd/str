@@ -54,9 +54,11 @@ string slice_str(string s, size_t start, size_t end);
 
 bool contains_str(string haystack, string needle);
 bool contains_char(string haystack, char needle);
+bool starts_with_str(string haystack, string s);
+bool starts_with_char(string haystack, char needle);
 
 bool append_str(string *dest, string src);
-bool append_char(string *dest, char needle);
+bool append_char(string *dest, char c);
 
 int index_of_char(string haystack, char needle);
 int index_of_str(string haystack, string needle);
