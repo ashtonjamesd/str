@@ -57,7 +57,7 @@ bool append_str(string *dest, string src) {
     return true;
 }
 
-bool append_char(string *dest, char needle) {
+bool append_char(string *dest, char c) {
     if (dest->capacity == 0) return false;
 
     if (dest->len == dest->capacity) {
@@ -65,7 +65,7 @@ bool append_char(string *dest, char needle) {
         dest->val = realloc(dest->val, dest->capacity);
     }
 
-    dest->val[dest->len] = needle;
+    dest->val[dest->len] = c;
     dest->len += 1;
 
     dest->val[dest->len] = '\0';
@@ -237,7 +237,7 @@ string to_lower_str(string s) {
     return new_s;
 }
 
-string from_file(char *path) {
+string create_str_from_file(char *path) {
     FILE *fptr = fopen(path, "r");
     if (!fptr) {
         return null_str();

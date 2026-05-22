@@ -363,7 +363,7 @@ should(create_an_empty_string) {
 }
 
 should(read_string_from_file) {
-    string s = from_file("test/fixtures/hello.txt");
+    string s = create_str_from_file("test/fixtures/hello.txt");
 
     expect(s.len == 13);
     expect(s.capacity == 14);
@@ -374,7 +374,7 @@ should(read_string_from_file) {
 }
 
 should(return_null_string_from_nonexistent_file) {
-    string s = from_file("test/fixtures/nonexistent.txt");
+    string s = create_str_from_file("test/fixtures/nonexistent.txt");
 
     expect(s.len == 0);
     expect(s.capacity == 0);
@@ -465,7 +465,7 @@ should(get_null_char_at_on_empty_string) {
 }
 
 should(read_empty_file) {
-    string s = from_file("test/fixtures/empty.txt");
+    string s = create_str_from_file("test/fixtures/empty.txt");
 
     expect(s.len == 0);
     expect_str_eq(s.val, "");
