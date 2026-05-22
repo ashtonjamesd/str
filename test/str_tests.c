@@ -603,6 +603,7 @@ should(not_be_empty_str) {
     expect(!is_empty_str(str("Hello")));
 }
 
+
 int main() {
   run_test(create_a_full_slice);
   run_test(slice_single_char);
